@@ -16,15 +16,15 @@
     width: 100%;
 }
 table {
-    outline: 2px solid black;
+    outline: 2px solid rgb(0, 0, 0);
     border-collapse: collapse;
     width: 100%;
 }
 th {
-    color: #000;
+    color: #000000;
 }
 th, td {
-    outline: 1px solid #ddd;
+    outline: 1px solid #afaeae;
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
@@ -39,11 +39,11 @@ td:last-child {
 }
 /*前後月の日付*/
 td.disabled {
-    color: #ccc;
+    color: #a2a2a2;
 }
 /*本日*/
 td.today {
-    background-color: #D65E72;
+    background-color: #d4475f;
     color: #fff;
 }
 
@@ -56,7 +56,7 @@ td.today {
     background: #B78D4A;
     color: #fff;
     border: 1px solid #B78D4A;
-    border-radius: 4px;
+    border-radius:10px;
     font-size: 1rem;
     padding: 0.5rem 2rem;
     margin: 1rem 0;

@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
 import style from '@/styles/Home.module.css'
-
+import { useEffect } from 'react'
+import { Button } from '@mui/material'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -12,11 +13,13 @@ const today = new Date();
 
 const showDate = new Date(today.getFullYear(), today.getMonth(),1);
 
-  window.onload = function(){
-  showProcess(today)
-  console.log(showDate)
   
+  
+useEffect(() => {
 
+showProcess(today)
+// eslint-disable-next-line react-hooks/exhaustive-deps
+},[]);
 
 function last(){
     showDate.setMonth(showDate.getMonth() - 1);
@@ -47,7 +50,7 @@ function showProcess(date: Date) {
 
 
   function createProcess(year: number, month: number) {
-    let calendar = "<table><tr classname='dayOfWeek'>";
+    let calendar = "<table><tr class='dayOfWeek'>";
     for (let i = 0; i < week.length; i++) {
         calendar += "<th>" + week[i] + "</th>";
     }
@@ -65,20 +68,20 @@ console.log(lastMonthEndDate)
 console.log(year)
 console.log(month)
 
-    for (var i = 0; i < row; i++) {
+    for (let i = 0; i < row; i++) {
         calendar += "<tr>"
-        for (var j = 0; j < week.length; j++) {
+        for (let j = 0; j < week.length; j++) {
             if (i == 0 && j < startDayOfWeek) {
-                calendar += "<td classname='disabled'>" + (lastMonthEndDate - startDayOfWeek + j + 1) + "</td>";
+                calendar += "<td class='disabled'>" + (lastMonthEndDate - startDayOfWeek + j + 1) + "</td>";
             } else if (count >= endDate) {
                 count++;
-                calendar += "<td classname='disabled'>" + (count - endDate) + "</td>";
+                calendar += "<td class='disabled'>" + (count - endDate) + "</td>";
             } else {
                 count++;
                 if(year == today.getFullYear()
                   && month == (today.getMonth())
                   && count == today.getDate()){
-                    calendar += "<td classname='today'>" + count + "</td>";
+                    calendar += "<td class='today'>" + count + "</td>";
                 } else {
                     calendar += "<td>" + count + "</td>";
                 }
@@ -106,8 +109,10 @@ console.log(month)
       <h1 id="header"></h1>
 
       <div id="next-last-btn">
-        <button id="last" onClick={last}>＜</button>
-       <button id="next" onClick={next}>＞</button>
+
+
+       <Button variant="contained" id="last" onClick={last}>＜</Button>
+       <Button variant="contained" id="next" onClick={next}>＞</Button>
       </div>
       <div id="calendar"></div>
     
@@ -117,4 +122,4 @@ console.log(month)
     </>
   )
 }
-}
+
