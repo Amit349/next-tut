@@ -14,40 +14,6 @@ const today = new Date();
 const showDate = new Date(today.getFullYear(), today.getMonth(),1);
 
   
-  
-useEffect(() => {
-
-showProcess(today)
-// eslint-disable-next-line react-hooks/exhaustive-deps
-},[]);
-
-function last(){
-    showDate.setMonth(showDate.getMonth() - 1);
-    showProcess(showDate);
-    console.log(showDate)
-}
-
-
-function next(){
-    showDate.setMonth(showDate.getMonth() + 1);
-    showProcess(showDate);
-    console.log("chip")
-}
-
-
-//Object.prototype.toString.call("button.next")
-//showProcess(showDate);
-function showProcess(date: Date) {
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    document.querySelector('#header')!.innerHTML = year + "年 " + (month + 1) + "月";
-
-    let calendar = createProcess(year, month);
-    document.querySelector('#calendar')!.innerHTML = calendar
-};
-
-
-
 
   function createProcess(year: number, month: number) {
     let calendar = "<table><tr class='dayOfWeek'>";
@@ -92,9 +58,34 @@ console.log(month)
     return calendar;
   }
  
- 
- 
- 
+ function showProcess(date: Date) {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    document.querySelector('#header')!.innerHTML = year + "年 " + (month + 1) + "月";
+
+    let calendar = createProcess(year, month);
+    document.querySelector('#calendar')!.innerHTML = calendar
+};
+
+ useEffect(() => {
+
+showProcess(today)
+// eslint-disable-next-line react-hooks/exhaustive-deps
+},[]);
+
+ function last(){
+    showDate.setMonth(showDate.getMonth() - 1);
+    showProcess(showDate);
+    console.log(showDate)
+}
+
+
+function next(){
+    showDate.setMonth(showDate.getMonth() + 1);
+    showProcess(showDate);
+    console.log("chip")
+}
+
   return (
     <>
       <Head>
