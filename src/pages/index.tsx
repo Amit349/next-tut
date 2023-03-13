@@ -3,22 +3,25 @@ import { Inter } from '@next/font/google'
 import style from '@/styles/Home.module.css'
 import { useEffect } from 'react'
 import { Button } from '@mui/material'
+import Box from '@material-ui/core/Box';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
- const week = ["日", "月", "火", "水", "木", "金", "土"];
-const today = new Date();
+  const week = ["日", "月", "火", "水", "木", "金", "土"];
+  const today = new Date();
 
-const showDate = new Date(today.getFullYear(), today.getMonth(),1);
+  const showDate = new Date(today.getFullYear(), today.getMonth(), 1);
 
-  
+
 
   function createProcess(year: number, month: number) {
     let calendar = "<table><tr class='dayOfWeek'>";
     for (let i = 0; i < week.length; i++) {
-        calendar += "<th>" + week[i] + "</th>";
+      calendar += "<th>" + week[i] + "</th>";
     }
     calendar += "</tr>";
 
@@ -28,63 +31,78 @@ const showDate = new Date(today.getFullYear(), today.getMonth(),1);
     let lastMonthEndDate = new Date(year, month, 0).getDate();
     let row = Math.ceil((startDayOfWeek + endDate) / week.length);
 
-console.log(startDayOfWeek);
-console.log(endDate)
-console.log(lastMonthEndDate)
-console.log(year)
-console.log(month)
+    console.log(startDayOfWeek);
+    console.log(endDate)
+    console.log(lastMonthEndDate)
+    console.log(year)
+    console.log(month)
 
     for (let i = 0; i < row; i++) {
-        calendar += "<tr>"
-        for (let j = 0; j < week.length; j++) {
-            if (i == 0 && j < startDayOfWeek) {
-                calendar += "<td class='disabled'>" + (lastMonthEndDate - startDayOfWeek + j + 1) + "</td>";
-            } else if (count >= endDate) {
-                count++;
-                calendar += "<td class='disabled'>" + (count - endDate) + "</td>";
-            } else {
-                count++;
-                if(year == today.getFullYear()
-                  && month == (today.getMonth())
-                  && count == today.getDate()){
-                    calendar += "<td class='today'>" + count + "</td>";
-                } else {
-                    calendar += "<td>" + count + "</td>";
-                }
-            }
+      calendar += "<tr>"
+      for (let j = 0; j < week.length; j++) {
+        if (i == 0 && j < startDayOfWeek) {
+          calendar += "<td class='disabled'>" + (lastMonthEndDate - startDayOfWeek + j + 1) + "</td>";
+        } else if (count >= endDate) {
+          count++;
+          calendar += "<td class='disabled'>" + (count - endDate) + "</td>";
+        } else {
+          count++;
+          if (year == today.getFullYear()
+            && month == (today.getMonth())
+            && count == today.getDate()) {
+            calendar += "<td class='today'>" + count + "</td>";
+          } else {
+            calendar += "<td>" + count + "</td>";
+          }
         }
-        calendar += "</tr>";
+      }
+      calendar += "</tr>";
     }
     return calendar;
   }
- 
- function showProcess(date: Date) {
+
+  function showProcess(date: Date) {
     const year = date.getFullYear();
     const month = date.getMonth();
-    document.querySelector('#header')!.innerHTML = year + "年 " + (month + 1) + "月";
+    const header = document.querySelector('#header');
+    const calendarDate= year + "年 " + (month + 1) + "月";
+    const elm = document.createElement('input')
+    elm.setAttribute("type", "text");
+    elm.setAttribute("name", "calendar");
+    elm.setAttribute("value", calendarDate); 
+    header.appendChild(elm)
+
+
 
     let calendar = createProcess(year, month);
-    document.querySelector('#calendar')!.innerHTML = calendar
-};
+    const CALENDAR =document.querySelector('#calendar')
+    const calendarBody = calendar
+    const elm2 = document.createElement('input')
+    elm2.setAttribute('type', 'text')
+    elm2.setAttribute('name', 'calendarBody')
+    elm2.setAttribute('value', calendarBody)
+    CALENDAR.appendChild(elm2)
 
- useEffect(() => {
+  };
 
-showProcess(today)
-// eslint-disable-next-line react-hooks/exhaustive-deps
-},[]);
+  useEffect(() => {
 
- function last(){
+    showProcess(today)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function last() {
     showDate.setMonth(showDate.getMonth() - 1);
     showProcess(showDate);
     console.log(showDate)
-}
+  }
 
 
-function next(){
+  function next() {
     showDate.setMonth(showDate.getMonth() + 1);
     showProcess(showDate);
     console.log("chip")
-}
+  }
 
   return (
     <>
@@ -94,22 +112,23 @@ function next(){
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      
+
       <style></style>
-    <div className="wrapper">
-      <h1 id="header"></h1>
+      <div className="wrapper">
+        <h1 id="header"></h1>
 
-      <div id="next-last-btn">
+        <div id="next-last-btn">
 
 
-       <Button variant="contained" id="last" onClick={last}>＜</Button>
-       <Button variant="contained" id="next" onClick={next}>＞</Button>
+          <Button variant="contained" id="last" onClick={last}>＜</Button>
+          <Button variant="contained" id="next" onClick={next}>＞</Button>
+        </div>
+        <div id="calendar"></div>
+        
+
+
       </div>
-      <div id="calendar"></div>
-    
-
-    </div>
-
+        <Box border={1} >a</Box>
     </>
   )
 }
