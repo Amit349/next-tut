@@ -2,7 +2,9 @@ import Head from 'next/head'
 import { Inter } from '@next/font/google'
 import style from '@/styles/Home.module.css'
 import { useEffect } from 'react'
-import { Button } from '@mui/material'
+import { Box, Button } from '@mui/material'
+import React from 'react';
+import {Header} from '../pages/components/header'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -19,8 +21,9 @@ const showDate = new Date(today.getFullYear(), today.getMonth(),1);
     let calendar = "<table><tr class='dayOfWeek'>";
     for (let i = 0; i < week.length; i++) {
         calendar += "<th>" + week[i] + "</th>";
-    }
+    } 
     calendar += "</tr>";
+   //このようなjsxで書かれたHTMLタグをmaterial-UIの<Box>コンポーネント(又は複数の種類のコンポーネント)に書き換えたい
 
     let count = 0;
     let startDayOfWeek = new Date(year, month, 1).getDay();
@@ -54,7 +57,7 @@ console.log(month)
             }
         }
         calendar += "</tr>";
-    }
+    }          //↑のようなタグも全てコンポーネントに書き換えた方が良いのか？
     return calendar;
   }
  
@@ -62,9 +65,11 @@ console.log(month)
     const year = date.getFullYear();
     const month = date.getMonth();
     document.querySelector('#header')!.innerHTML = year + "年 " + (month + 1) + "月";
+                                                 //↑ここの部分だけを<Header>に付けたい
 
     let calendar = createProcess(year, month);
-    document.querySelector('#calendar')!.innerHTML = calendar
+    document.querySelector('#calendar')!.innerHTML = calendar //←この部分を<Calendar>コンポーネントに付けたい
+    //だけどdocumentを使わずにDOMを操作する方法が分からない(ReactDOM.render(document.getElementById)なら可能？？)
 };
 
  useEffect(() => {
@@ -98,15 +103,18 @@ function next(){
       <style></style>
     <div className="wrapper">
       <h1 id="header"></h1>
+      {/*　↑のタグの代わりに同じ内容の<Header>コンポーネントを呼び出したい↓*/}
+      <Header />
+    
+
 
       <div id="next-last-btn">
-
-
        <Button variant="contained" id="last" onClick={last}>＜</Button>
        <Button variant="contained" id="next" onClick={next}>＞</Button>
       </div>
       <div id="calendar"></div>
-    
+      {/*↑の代わりに<Calendar>コンポーネントを作る*/} 
+
 
     </div>
 
